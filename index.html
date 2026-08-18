@@ -400,9 +400,9 @@ const ACTIVITIES = [
   {id:'w2-art-1', week:2, date:'2026-08-19', emoji:'🎨', title:'Holiday Art Club', who:'jacob',
     time:'9:30am – 3:00pm', cost:'£45 / day', location:'Art club (link TBC)',
     notes:'Day 1 of 2.', link:null, status:'confirmed'},
-  {id:'w2-swimming', week:2, date:'2026-08-19', emoji:'🏊', title:'Swimming', who:'noah',
-    time:'Morning', cost:null, location:null,
-    notes:"While Jacob's at Art Club.", link:null, status:'confirmed'},
+  {id:'w2-swimming', week:2, date:'2026-08-19', emoji:'🏊', title:'Family Swimming', who:'noah',
+    time:'11:00am', cost:'£12.45 total (Kevin + 1 Junior)', location:'Training Pool, London Aquatics Centre',
+    notes:"While Jacob's at Art Club. 1 hour session, Training Pool lanes 5a-8a. Booked and paid. Toys under 1 metre only; under 8s must be with an adult.", link:null, status:'confirmed'},
 
   {id:'w2-art-2', week:2, date:'2026-08-20', emoji:'🎨', title:'Holiday Art Club', who:'jacob',
     time:'9:30am – 3:00pm', cost:'£45 / day', location:'Art club (link TBC)',
@@ -433,7 +433,7 @@ const ACTIVITIES = [
     notes:'Weekly Friday session.', link:null, status:'tbc-cost'},
 
   {id:'w2-meeting-22', week:2, date:'2026-08-22', emoji:'🤝', title:'Meeting Andy Harrison', who:'family',
-    time:'5:00pm', cost:null, location:'Hammersmith',
+    time:'6:15pm', cost:null, location:'Hammersmith',
     notes:'Personal / logistics — not a kids activity.', link:null, status:'confirmed'},
 
   {id:'w2-cinema', week:2, date:'2026-08-23', emoji:'🎬', title:'Open-air Cinema', who:'both',
@@ -445,8 +445,8 @@ const ACTIVITIES = [
     time:'9:15am – 12:15pm', cost:'£39 / session / child', location:'WGC London',
     notes:'Moved from 25th to 24th Aug.', link:'https://parz.com/pages/wgc-london-book-a-service', status:'confirmed'},
   {id:'w3-practice', week:3, date:'2026-08-24', emoji:'🏌️', title:'Practice — golf, cricket & tennis', who:'both',
-    time:null, cost:null, location:'Park / garden',
-    notes:'Moved from Sun 23 to Mon 24 Aug.', link:null, status:'confirmed'},
+    time:'1:00pm', cost:null, location:'Park / garden',
+    notes:'Moved from Sun 23 to Mon 24 Aug. In the afternoon, after the golf lesson.', link:null, status:'confirmed'},
   {id:'w3-gym', week:3, date:'2026-08-25', emoji:'🤸', title:'Gymnastics', who:'jacob',
     time:'6:00 – 8:00pm', cost:'£68.90 / month', location:'SEGC',
     notes:'£68.90/month covers all sessions in August.', link:null, status:'confirmed'},
@@ -465,12 +465,9 @@ const ACTIVITIES = [
     time:'2:00 – 3:00pm', cost:'£40 / session', location:null,
     notes:null, link:null, status:'confirmed'},
 
-  {id:'w3-golf-maybe', week:3, date:'2026-08-28', emoji:'⛳', title:'Golf (maybe)', who:'both',
-    time:'9:15am – 12:15pm', cost:'£39 / session / child', location:'WGC London',
-    notes:'Still unconfirmed — not yet counted in the running total. Overlaps with the Epping visit at 11am if both go ahead.', link:'https://parz.com/pages/wgc-london-book-a-service', status:'maybe'},
   {id:'w3-epping', week:3, date:'2026-08-28', emoji:'🐾', title:'Epping — visit Manners & the pet shop', who:'family',
     time:'11:00am', cost:null, location:'Epping',
-    notes:'Overlaps with the maybe-golf session (9:15am–12:15pm) — worth double-checking timing if golf goes ahead.', link:null, status:'confirmed'},
+    notes:null, link:null, status:'confirmed'},
   {id:'w3-cricket-fri', week:3, date:'2026-08-28', emoji:'🏏', title:'Cricket', who:'jacob',
     time:'4:45 – 6:00pm', cost:'Cost TBC', location:'Cricket club (link TBC)',
     notes:'Weekly Friday session.', link:null, status:'tbc-cost'},
@@ -897,20 +894,9 @@ function renderCosts(){
     </div>
 
     <div class="cost-card">
-      <h3>Unconfirmed</h3>
-      <table class="costs">
-        <thead><tr><th>Activity</th><th>Date</th><th class="num">If it goes ahead</th></tr></thead>
-        <tbody>
-          <tr class="maybe"><td>Golf (maybe) <span class="pill-small">Maybe</span></td><td>28 Aug</td><td class="num">£78 (both boys)</td></tr>
-        </tbody>
-      </table>
-      <div class="footnote">Not yet added to the running total below — flip it to confirmed once you know.</div>
-    </div>
-
-    <div class="cost-card">
       <h3>Running total</h3>
       <div class="total-strip">
-        <span class="label">Known costs (excl. maybe-golf)</span>
+        <span class="label">Known costs</span>
         <span class="amount">£615.00</span>
       </div>
       <div class="footnote" style="margin-top:10px;">Days out (zoos, museums, farm visit) aren't in this table — the zoo and museum visits are free entry; farm visit cost is still TBC.</div>
@@ -921,7 +907,7 @@ function renderCosts(){
       <div class="by-child">
         <div class="child-card jacob">
           <h4>Jacob</h4>
-          <div class="row"><span>Golf (3 + 1 maybe)</span><b>£117</b></div>
+          <div class="row"><span>Golf (3)</span><b>£117</b></div>
           <div class="row"><span>Cricket (1 day)</span><b>£40</b></div>
           <div class="row"><span>Tennis (1, after discount)</span><b>£20.70</b></div>
           <div class="row"><span>Art Club (2 days)</span><b>£90</b></div>
@@ -931,7 +917,7 @@ function renderCosts(){
         </div>
         <div class="child-card noah">
           <h4>Noah</h4>
-          <div class="row"><span>Golf (3 + 1 maybe)</span><b>£117</b></div>
+          <div class="row"><span>Golf (3)</span><b>£117</b></div>
           <div class="row"><span>Cricket</span><b>—</b></div>
           <div class="row"><span>Tennis (2, after discount)</span><b>£41.40</b></div>
           <div class="row"><span>Art Club</span><b>—</b></div>
@@ -940,7 +926,6 @@ function renderCosts(){
           <div class="total"><span>Known total</span><span>£198.40</span></div>
         </div>
       </div>
-      <div class="footnote" style="margin-top:10px;">Excludes the maybe-golf session on 28 Aug.</div>
     </div>
   `;
 }
