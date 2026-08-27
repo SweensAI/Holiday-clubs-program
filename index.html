@@ -253,7 +253,8 @@ const CLUB_SHEET_IMG = '/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAYgAtgDACIAAREBAhEB/9sA
 const WEEKLY_TEMPLATE = [
   {id:'bjj', dow:1, title:'BJJ', emoji:'🥋', who:'both', time:'16:15–17:45', cost:'£15 / session', location:'Fight Zone London', link:'https://fightzonelondon.co.uk/kids-timetable', notes:'Confirmed for autumn — Fight Zone London, Mondays 4:15–5:45pm. Runs all year round, including school holidays.', status:'confirmed', session:'evening', yearRound:true},
 
-  {id:'french', dow:2, title:'French Club', emoji:'🇫🇷', who:'both', time:'Lunchtime', cost:'£6.50 / wk', location:'School', link:'https://www.lingotot.com/course/9e7466bc-58b7-4823-b74b-0e7e3300d5ce/term/a23878dc-5040-429a-9954-7084d1788eb9', notes:'Booked directly with the facilitator (Lingotot).', status:'confirmed', session:'lunchtime'},
+  {id:'french-jacob', dow:1, title:'French Club (Jacob)', emoji:'🇫🇷', who:'jacob', time:'12:15', cost:'£5 / wk', location:'School', link:'https://www.lingotot.com/course/9e7466bc-58b7-4823-b74b-0e7e3300d5ce/term/a23878dc-5040-429a-9954-7084d1788eb9', notes:'Booked directly with the facilitator (Lingotot) — confirmed, £70 for the 14-week term.', status:'confirmed', session:'lunchtime'},
+  {id:'french-noah', dow:1, title:'French Club (Noah)', emoji:'🇫🇷', who:'noah', time:'12:45', cost:'£5 / wk', location:'School', link:'https://www.lingotot.com/course/9e7466bc-58b7-4823-b74b-0e7e3300d5ce/term/a23878dc-5040-429a-9954-7084d1788eb9', notes:'Booked directly with the facilitator (Lingotot) — confirmed, £70 for the 14-week term.', status:'confirmed', session:'lunchtime'},
   {id:'chess-jacob', dow:2, title:'Chess (Jacob)', emoji:'♟️', who:'jacob', time:'12:15', cost:'£6.50 / wk', location:'School', link:'https://pmx.parentmail.co.uk/#core', notes:'Needs booking via ParentMail.', status:'to-book', session:'lunchtime'},
   {id:'chess-noah', dow:2, title:'Chess (Noah)', emoji:'♟️', who:'noah', time:'12:45', cost:'£6.50 / wk', location:'School', link:'https://pmx.parentmail.co.uk/#core', notes:'Needs booking via ParentMail — new for Noah this term.', status:'to-book', session:'lunchtime'},
   {id:'gym-jacob', dow:2, title:'Gymnastics', emoji:'🤸', who:'jacob', time:'18:30', cost:'Direct debit (monthly)', location:'SEGC', link:'https://www.southessexgymnasticsclub.com/events', notes:'South Essex Gymnastics Club — paid by monthly direct debit, amount TBC. Runs all year round, including school holidays.', status:'tbc-cost', session:'evening', yearRound:true},
@@ -261,7 +262,7 @@ const WEEKLY_TEMPLATE = [
 
   {id:'cubs', dow:3, title:'Cubs', emoji:'🏕️', who:'jacob', time:'18:30', cost:'Confirm cost', location:'Confirm venue', link:'https://www.onlinescoutmanager.co.uk/login.php', notes:'Booking/payment managed via Online Scout Manager — cost to be confirmed.', status:'tbc-cost', session:'evening'},
   {id:'cookery-noah', dow:3, title:'Cookery Club', emoji:'🍳', who:'noah', time:'After school (4:30)', cost:'£7.50 / session', location:'School', link:'https://pmx.parentmail.co.uk/#core', notes:'Needs booking via ParentMail — 14-week block.', status:'to-book', session:'after-school'},
-  {id:'coding-jacob', dow:3, title:'Coding Ninjas (Y5 &amp; 6)', emoji:'💻', who:'jacob', time:'After school (4:30)', cost:'£6.50 / session', location:'School', link:'https://pmx.parentmail.co.uk/#core', notes:'Needs booking via ParentMail — 14-week block.', status:'to-book', session:'after-school'},
+  {id:'latin-jacob', dow:3, title:'Latin Club', emoji:'🏛️', who:'jacob', time:'After school, until 16:00', cost:'Confirm cost', location:'School', notes:'Place allocated by the school — no booking needed. Starts Wed 16 Sept, runs to Wed 9 Dec. Does not run 19–30 Oct (school half term window for this club). Replaces Coding Ninjas.', status:'tbc-cost', session:'after-school', startDate:'2026-09-16', endDate:'2026-12-09', extraSkipRanges:[{start:'2026-10-19', end:'2026-10-30'}]},
 
   {id:'okd-jacob', dow:4, title:'OKD Ballet', emoji:'🩰', who:'jacob', time:'After school (time TBC)', cost:'Confirm cost', location:'Confirm venue', link:'https://app.classmanager.com/portal/olive-kane-dance', notes:'Olive Kane Dance — confirm exact time and cost for autumn.', status:'tbc-time', session:'after-school'},
   {id:'tutor-jacob', dow:4, title:'Tutor — Nhung', emoji:'📚', who:'jacob', time:'19:00', cost:'£40 / session', location:'Confirm venue', notes:'Nhung is a tutor, not a sports coach.', status:'confirmed', session:'evening'},
@@ -292,7 +293,6 @@ const PRE_TERM = {start:'2026-08-31', end:'2026-09-02'}; // week before school s
 /* One-off school club registrations to book via ParentMail */
 const BOOKINGS = [
   {id:'book-cookery-noah', title:'Cookery Club — Noah', cost:'£7.50 / session', who:'noah'},
-  {id:'book-coding-jacob', title:'Coding Ninjas Y5&6 — Jacob', cost:'£6.50 / session', who:'jacob'},
   {id:'book-hiphop-noah', title:'Hip Hop — Noah', cost:'£7 / session', who:'noah'},
   {id:'book-chess-jacob', title:'Chess — Jacob', cost:'£6.50 / wk', who:'jacob'},
   {id:'book-chess-noah', title:'Chess — Noah', cost:'£6.50 / wk', who:'noah'},
@@ -326,6 +326,10 @@ function isClubBooked(id){ return !!getClubChecklist()[id]; }
 function setClubBooked(id, val){ const map = getClubChecklist(); if(val) map[id]=true; else delete map[id]; try { localStorage.setItem('clubBookingChecklist', JSON.stringify(map)); } catch(e){} }
 
 /* --- Generate dated activities from the weekly template --- */
+function inExtraSkipRange(t, dateStr){
+  if(!t.extraSkipRanges) return false;
+  return t.extraSkipRanges.some(r=>dateStr>=r.start && dateStr<=r.end);
+}
 function generateActivities(){
   const acts = [];
   TERM_BLOCKS.forEach(block=>{
@@ -334,6 +338,9 @@ function generateActivities(){
       const dow = new Date(dateStr+'T00:00:00').getDay();
       WEEKLY_TEMPLATE.forEach(t=>{
         if(t.dow !== dow) return;
+        if(t.startDate && dateStr < t.startDate) return;
+        if(t.endDate && dateStr > t.endDate) return;
+        if(inExtraSkipRange(t, dateStr)) return;
         if(t.session==='after-school' && dateStr===LAST_DAY_OF_TERM) return;
         acts.push(Object.assign({}, t, {id: t.id+'-'+dateStr, date: dateStr, templateId: t.id}));
       });
